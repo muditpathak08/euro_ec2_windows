@@ -26,6 +26,7 @@ variable "InstanceType" {
 variable "vpc_id" {
   type        = string
   description = "The ID of the VPC that the instance security group belongs to"
+  default     = "vpc-0beff1ce4c238d689"
 }
 
 variable "security_group_enabled" {
@@ -63,7 +64,7 @@ variable "security_group_rules" {
       cidr_blocks = ["192.168.161.215/32"]
       description = "Allow all outbound traffic"
     }
-    
+
   ]
   # description = 
 }
@@ -71,6 +72,7 @@ variable "security_group_rules" {
 variable "SubnetId" {
   type        = string
   description = "VPC Subnet ID the instance is launched in"
+  default     = "subnet-0e0f857de5f148459"
 }
 
 variable "region" {
@@ -195,5 +197,26 @@ variable "delete_on_termination" {
 }
 
 
-
+variable "my_tags" {
+  default = {
+    BackupSchedule             = "DR1y"
+    BusinessOwner              = "test@hotstar.com"
+    BusinessTower              = "test@hotstar.com"
+    InstanceIP                 = "10.33.21.25"
+    Name                       = "SSB-WPX-001-P"
+    OperatingSystem            = "Windows Server 2022"
+    OperatingSystemSupportTeam = "test@hotmail.com"
+    scheduler                  = "ec2-startstop"
+    ServerProcess              = "service MS "
+    ServerRoleType             = "Application"
+    ServiceCriticality         = "High"
+    Subnet-id                  = "subnet-0e0f857de5f148459"
+    VPC-id                     = "vpc-0beff1ce4c238d689"
+    TicketReference            = "CHG0050760"
+    DNSEntry                   = "csdasd"
+    DesignDocumentLink         = "acbv"
+  }
+  description = "Tags for Auto Scaling Group"
+  type        = map(string)
+}
 
