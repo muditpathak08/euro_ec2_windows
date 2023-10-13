@@ -1,7 +1,7 @@
 locals {
   # enabled        		 = module.this.enabled
   volume_count   		 = var.ebs_volume_count
-  security_group_enabled = module.this.enabled && var.security_group_enabled
+  # security_group_enabled = module.this.enabled && var.security_group_enabled
   root_iops              = contains(["io1", "io2", "gp3"], var.root_volume_type) ? var.root_iops : null
   ebs_iops               = contains(["io1", "io2", "gp3"], var.ebs_volume_type) ? var.ebs_iops : null
   root_throughput        = var.root_volume_type == "gp3" ? var.root_throughput : null
@@ -47,21 +47,22 @@ locals {
 # }
 
 resource "aws_instance" "default" {
-  ami                                  = var.aws_ami.info.id
+  # ami                                  = var.aws_ami.info.id
+  ami                                  = var.ami
   availability_zone                    = var.availability_zone
   instance_type                        = var.InstanceType
   ebs_optimized                        = var.ebs_optimized
   disable_api_termination              = true
   associate_public_ip_address 		   = true
-  iam_instance_profile                 = var.InstanceProfileName
+  # iam_instance_profile                 = var.InstanceProfileName
   # key_name                             = var.KeyName
   subnet_id                            = var.SubnetId
   monitoring                           = var.monitoring
-  vpc_security_group_ids = 
-    concat(
-      formatlist("%s", module.security_group.id),
-      var.security_groups
-    )
+  # vpc_security_group_ids = 
+  #   concat(
+  #     formatlist("%s", module.security_group.id),
+  #     var.security_groups
+    #)
   # root disk
   root_block_device {
     volume_type           = local.root_volume_type
@@ -73,32 +74,32 @@ resource "aws_instance" "default" {
     # kms_key_id            = var.root_block_device_kms_key_id
   }
 
- depends_on = [ aws_security_group.module.security_group]
+#  depends_on = [ aws_security_group.module.security_group]
 # tags = var.tags
-  tags ={
-    ApplicationEnvironment = "${var.Environment}"
-    ApplicationFunctionality = "${var.ApplicationFunctionality}"
-    ApplicationName       = "${var.ApplicationName}"
-    ApplicationOwner      = "${var.ApplicationOwner}"
-    ApplicationTeam = "${var.ApplicationTeam}"
-    BackupSchedule = "${var.BackupSchedule}"
-    BusinessOwner = "${var.BusinessOwner}"
-    BusinessTower = "${var.BusinessTower}"
-    InstanceIP = "${var.InstanceIP}"
-    Name = "${var.Name}"
-    OperatingSystem = "${var.OperatingSystem}"
-    OperatingSystemSupportTeam = "${var.OperatingSystemSupportTeam}"
-    scheduler = "${var.OperatingSystemSupportTeam}"
-    ServerProcess = "${var.ServerProcess}"
-    ServerRoleType = "${var.ServerRoleType}"
-    ServiceCriticality = "${var.ServiceCriticality}"
-    Subnet-id = "${var.Subnet-id}"
-    VPC-id = "${var.VPC-id}"
-    TicketReference = "${var.TicketReference}"
-    DNSEntry = "${var.DNSEntry}"
-    DesignDocumentLink = "${var.DesignDocumentLink}"
+  # tags ={
+  #   ApplicationEnvironment = "${var.Environment}"
+  #   ApplicationFunctionality = "${var.ApplicationFunctionality}"
+  #   ApplicationName       = "${var.ApplicationName}"
+  #   ApplicationOwner      = "${var.ApplicationOwner}"
+  #   ApplicationTeam = "${var.ApplicationTeam}"
+  #   BackupSchedule = "${var.BackupSchedule}"
+  #   BusinessOwner = "${var.BusinessOwner}"
+  #   BusinessTower = "${var.BusinessTower}"
+  #   InstanceIP = "${var.InstanceIP}"
+  #   Name = "${var.Name}"
+  #   OperatingSystem = "${var.OperatingSystem}"
+  #   OperatingSystemSupportTeam = "${var.OperatingSystemSupportTeam}"
+  #   scheduler = "${var.OperatingSystemSupportTeam}"
+  #   ServerProcess = "${var.ServerProcess}"
+  #   ServerRoleType = "${var.ServerRoleType}"
+  #   ServiceCriticality = "${var.ServiceCriticality}"
+  #   Subnet-id = "${var.Subnet-id}"
+  #   VPC-id = "${var.VPC-id}"
+  #   TicketReference = "${var.TicketReference}"
+  #   DNSEntry = "${var.DNSEntry}"
+  #   DesignDocumentLink = "${var.DesignDocumentLink}"
 
-  }
+  # }
 }
 
 
@@ -110,9 +111,9 @@ resource "aws_ebs_volume" "default" {
   iops              = local.ebs_iops
   throughput        = local.ebs_throughput
   type              = var.ebs_volume_type
-  tags              = var.tags
+  # tags              = var.tags
   encrypted         = var.ebs_volume_encrypted
-  kms_key_id        = var.kms_key_id
+  # kms_key_id        = var.kms_key_id
 }
 
 resource "aws_volume_attachment" "default" {

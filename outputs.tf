@@ -1,82 +1,82 @@
-output "public_ip" {
-  description = "Public IP of instance (or EIP)"
-  value       = concat(aws_eip.default[*].public_ip, aws_instance.default[*].public_ip, [""])[0]
-}
+# output "public_ip" {
+#   description = "Public IP of instance (or EIP)"
+#   value       = concat(aws_eip.default[*].public_ip, aws_instance.default[*].public_ip, [""])[0]
+# }
 
-output "private_ip" {
-  description = "Private IP of instance"
-  value       = one(aws_instance.default[*].private_ip)
-}
-
-
-output "id" {
-  description = " ID of the instance"
-  value       = one(aws_instance.default[*].id)
-}
-
-output "arn" {
-  description = "ARN of the instance"
-  value       = one(aws_instance.default[*].arn)
-}
-
-output "name" {
-  description = "Instance name"
-  value       = module.this.id
-}
-
-output "ssh_key_pair" {
-  description = "Name of the SSH key pair provisioned on the instance"
-  value       = var.KeyName
-}
-
-output "security_group_ids" {
-  description = "IDs on the AWS Security Groups associated with the instance"
-  value = compact(
-    concat(
-      formatlist("%s", module.security_group.id),
-      var.security_groups
-    )
-  )
-}
-
-output "role" {
-  description = "Name of AWS IAM Role associated with the instance"
-  value       = local.instance_profile_count > 0 ? one(aws_iam_role.default[*].name) : one(data.aws_iam_instance_profile.given[*].role_name)
-}
-
-output "role_arn" {
-  description = "ARN of AWS IAM Role associated with the instance"
-  value       = local.instance_profile_count > 0 ? one(aws_iam_role.default[*].arn) : one(data.aws_iam_instance_profile.given[*].role_arn)
-}
-
-output "alarm" {
-  description = "CloudWatch Alarm ID"
-  value       = one(aws_cloudwatch_metric_alarm.default[*].id)
-}
+# output "private_ip" {
+#   description = "Private IP of instance"
+#   value       = one(aws_instance.default[*].private_ip)
+# }
 
 
-output "ebs_ids" {
-  description = "IDs of EBSs"
-  value       = aws_ebs_volume.default[*].id
-}
+# output "id" {
+#   description = " ID of the instance"
+#   value       = one(aws_instance.default[*].id)
+# }
+
+# output "arn" {
+#   description = "ARN of the instance"
+#   value       = one(aws_instance.default[*].arn)
+# }
+
+# output "name" {
+#   description = "Instance name"
+#   value       = module.this.id
+# }
+
+# output "ssh_key_pair" {
+#   description = "Name of the SSH key pair provisioned on the instance"
+#   value       = var.KeyName
+# }
+
+# output "security_group_ids" {
+#   description = "IDs on the AWS Security Groups associated with the instance"
+#   value = compact(
+#     concat(
+#       formatlist("%s", module.security_group.id),
+#       var.security_groups
+#     )
+#   )
+# }
+
+# output "role" {
+#   description = "Name of AWS IAM Role associated with the instance"
+#   value       = local.instance_profile_count > 0 ? one(aws_iam_role.default[*].name) : one(data.aws_iam_instance_profile.given[*].role_name)
+# }
+
+# output "role_arn" {
+#   description = "ARN of AWS IAM Role associated with the instance"
+#   value       = local.instance_profile_count > 0 ? one(aws_iam_role.default[*].arn) : one(data.aws_iam_instance_profile.given[*].role_arn)
+# }
+
+# output "alarm" {
+#   description = "CloudWatch Alarm ID"
+#   value       = one(aws_cloudwatch_metric_alarm.default[*].id)
+# }
 
 
-output "instance_profile" {
-  description = "Name of the instance's profile (either built or supplied)"
-  value       = local.instance_profile
-}
+# output "ebs_ids" {
+#   description = "IDs of EBSs"
+#   value       = aws_ebs_volume.default[*].id
+# }
 
-output "security_group_id" {
-  value       = module.security_group.id
-  description = "EC2 instance Security Group ID"
-}
 
-output "security_group_arn" {
-  value       = module.security_group.arn
-  description = "EC2 instance Security Group ARN"
-}
+# output "instance_profile" {
+#   description = "Name of the instance's profile (either built or supplied)"
+#   value       = local.instance_profile
+# }
 
-output "security_group_name" {
-  value       = module.security_group.name
-  description = "EC2 instance Security Group name"
-}
+# output "security_group_id" {
+#   value       = module.security_group.id
+#   description = "EC2 instance Security Group ID"
+# }
+
+# output "security_group_arn" {
+#   value       = module.security_group.arn
+#   description = "EC2 instance Security Group ARN"
+# }
+
+# output "security_group_name" {
+#   value       = module.security_group.name
+#   description = "EC2 instance Security Group name"
+# }
