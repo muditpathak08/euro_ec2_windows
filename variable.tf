@@ -84,7 +84,7 @@ variable "region" {
 variable "availability_zone" {
   type        = string
   description = "Availability Zone the instance is launched in. If not set, will be launched in the first AZ of the region"
-  default     = ""
+  default     = "us-east-2a"
 }
 
 variable "ami" {
@@ -133,7 +133,7 @@ variable "root_volume_type" {
 variable "root_volume_size" {
   type        = number
   description = "Size of the root volume in gigabytes"
-  default     = 10
+  default     = 30
 }
 
 variable "root_iops" {
@@ -163,7 +163,7 @@ variable "ebs_volume_type" {
 variable "ebs_volume_size" {
   type        = number
   description = "Size of the additional EBS volumes in gigabytes"
-  default     = 10
+  default     = 30
 }
 
 variable "ebs_volume_encrypted" {
@@ -187,7 +187,7 @@ variable "ebs_throughput" {
 variable "ebs_volume_count" {
   type        = number
   description = "Count of EBS volumes that will be attached to the instance"
-  default     = 0
+  default     = 1
 }
 
 variable "delete_on_termination" {
@@ -196,6 +196,12 @@ variable "delete_on_termination" {
   default     = true
 }
 
+
+variable "role_Name" {
+  type        = string
+  description = "Name of the Role to be assumed"
+  default     = "EuroGroup_AWS_TFC"
+}
 
 variable "my_tags" {
   default = {
